@@ -47,7 +47,7 @@ export default {
       css(css) {
         css.write("bundle.css");
       },
-      preprocess: sveltePreprocess(),
+      preprocess: sveltePreprocess({ postcss: true }),
     }),
     resolve({
       browser: true,

@@ -36,6 +36,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "firebase": "^7.21.0",
     "lodash": "^4.17.20",
     "sirv-cli": "^1.0.0",
     "yup": "^0.29.3"

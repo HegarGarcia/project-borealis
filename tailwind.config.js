@@ -5,8 +5,15 @@ module.exports = {
   },
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        app: "30ch 1fr",
+      },
+      gridTemplateRows: {
+        drawer: "auto 1fr 1fr",
+      },
+    },
   },
   variants: {},
   plugins: [],
-}
+};

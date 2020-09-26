@@ -3,14 +3,17 @@
   import { user } from "../services/auth";
 </script>
 
-<style>
-  :global(body) {
-    @apply grid;
+<style lang="scss">
+  div {
+    @apply w-screen h-screen;
+    @apply grid grid-rows-1 grid-cols-1;
   }
 </style>
 
 {#if !$user.uid}
-  <main>
-    <slot />
-  </main>
+  <div>
+    <main>
+      <slot />
+    </main>
+  </div>
 {:else}{$redirect('/app')}{/if}

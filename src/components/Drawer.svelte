@@ -1,5 +1,5 @@
 <script lang="ts">
-  import List from "./List.svelte";
+  import LinkList from "./LinkList.svelte";
   import Profile from "./Profile.svelte";
   import { projects } from "../services/projects";
   import { recipes } from "../services/recipes";
@@ -13,6 +13,6 @@
 
 <aside>
   <Profile />
-  <List title="Projects" items={$projects} queryKey="project" />
-  <List title="Recipes" items={$recipes} queryKey="recipe" />
+  <LinkList title="Projects" items={$projects} queryKey="project" />
+  <LinkList title="Recipes" items={$recipes} queryKey="recipe" />
 </aside>

@@ -2,7 +2,8 @@
   import { url } from "@sveltech/routify";
   export let title: string;
   export let items: any[] = [];
-  export let baseUrl: string = "";
+  export let queryKey: string;
+  let baseUrl = $url();
 </script>
 
 <style lang="scss">
@@ -33,12 +34,8 @@
   {/if}
 
   <ul>
-    {#each items as item (item.id)}
-      <li>
-        {#if baseUrl}
-          <a href={$url(`${baseUrl}/:id`, { id: item.id })}>{item.name}</a>
-        {:else}{item.name}{/if}
-      </li>
+    {#each items as { id, name } (id)}
+      <li><a href={$url(`${baseUrl}?${queryKey}=:id`, { id })}>{name}</a></li>
     {:else}
       <li>No {title}</li>
     {/each}

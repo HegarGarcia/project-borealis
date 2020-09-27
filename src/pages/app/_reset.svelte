@@ -1,7 +1,6 @@
 <script lang="ts">
   import { redirect } from "@sveltech/routify";
-
-  import Nav from "../../components/Nav.svelte";
+  import Drawer from "../../components/Drawer.svelte";
   import { user } from "../../services/auth";
 
   $: if (!$user.uid) {
@@ -17,7 +16,7 @@
 </style>
 
 <div>
-  <Nav />
+  <Drawer />
   <main>
     <slot />
   </main>

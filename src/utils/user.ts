@@ -12,6 +12,6 @@ export function toUser(user: Partial<FirebaseUser>): User {
     uid: user.uid ?? "",
     name: user.displayName ?? "",
     email: user.email ?? "",
-    photoUrl: user.photoURL ?? "",
+    photoUrl: user.photoURL ?? "/assets/images/profile.png",
   };
 }

@@ -38,6 +38,8 @@
   "dependencies": {
     "firebase": "^7.21.0",
     "lodash": "^4.17.20",
+    "rxfire": "^3.13.5",
+    "rxjs": "^6.6.3",
     "sirv-cli": "^1.0.0",
     "yup": "^0.29.3"
   },

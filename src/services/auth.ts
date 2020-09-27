@@ -2,6 +2,7 @@ import { auth } from "firebase/app";
 import "firebase/auth";
 import { readable } from "svelte/store";
 import { toUser } from "../utils/user";
+import app from "./firebase";
 
 interface SignInCredentials {
   email: string;
@@ -31,7 +32,7 @@ const initialUser = toUser({
 });
 
 export const user = readable(initialUser, (set) => {
-  auth().onAuthStateChanged((credentials) => {
+  auth(app).onAuthStateChanged((credentials) => {
     if (credentials) {
       localStorage.setItem("user", credentials.uid);
     } else {
@@ -43,18 +44,18 @@ export const user = readable(initialUser, (set) => {
 });
 
 export function signOut() {
-  return auth().signOut();
+  return auth(app).signOut();
 }
 
 export async function signInEmailAndPassword({
   email,
   password,
 }: SignInCredentials) {
-  return void (await auth().signInWithEmailAndPassword(email, password));
+  return void (await auth(app).signInWithEmailAndPassword(email, password));
 }
 
 export async function signInWithGoogle() {
-  return void (await auth().signInWithPopup(GoogleProvider));
+  return void (await auth(app).signInWithPopup(GoogleProvider));
 }
 
 export async function signUpWithEmailAndPassword({
@@ -66,9 +67,9 @@ export async function signUpWithEmailAndPassword({
     throw new AuthError("Passwords do not match");
   }
 
-  return void (await auth().createUserWithEmailAndPassword(email, password));
+  return void (await auth(app).createUserWithEmailAndPassword(email, password));
 }
 
 export async function recoverPassword({ email }: RecoverCredentials) {
-  await auth().sendPasswordResetEmail(email);
+  await auth(app).sendPasswordResetEmail(email);
 }

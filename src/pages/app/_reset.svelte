@@ -1,7 +1,7 @@
 <script lang="ts">
   import { redirect } from "@sveltech/routify";
   import Drawer from "../../components/Drawer.svelte";
-  import { user } from "../../services/auth";
+  import user from "../../services/user";
 
   $: if (!$user.uid) {
     $redirect("/");
@@ -16,7 +16,7 @@
 </style>
 
 <div>
-  <Drawer />
+  <Drawer user={$user} />
   <main>
     <slot />
   </main>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { redirect } from "@sveltech/routify";
-  import { user } from "../services/auth";
+  import user from "../services/user";
 </script>
 
 <style lang="scss">

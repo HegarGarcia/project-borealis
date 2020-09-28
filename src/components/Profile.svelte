@@ -1,7 +1,8 @@
 <script lang="ts">
   import { goto } from "@sveltech/routify";
   import Close from "../icons/Close.svelte";
-  import { signOut, user } from "../services/auth";
+  import { signOut } from "../services/auth";
+  import user from "../services/user";
 
   async function logOut() {
     await signOut();

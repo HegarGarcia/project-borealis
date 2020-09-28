@@ -1,7 +1,5 @@
 import { auth } from "firebase/app";
 import "firebase/auth";
-import { readable } from "svelte/store";
-import { toUser } from "../utils/user";
 import app from "./firebase";
 
 interface SignInCredentials {
@@ -26,22 +24,6 @@ class AuthError extends Error {
 }
 
 const GoogleProvider = new auth.GoogleAuthProvider();
-
-const initialUser = toUser({
-  uid: localStorage.getItem("user"),
-});
-
-export const user = readable(initialUser, (set) => {
-  auth(app).onAuthStateChanged((credentials) => {
-    if (credentials) {
-      localStorage.setItem("user", credentials.uid);
-    } else {
-      localStorage.removeItem("user");
-    }
-
-    set(toUser(credentials ?? {}));
-  });
-});
 
 export function signOut() {
   return auth(app).signOut();

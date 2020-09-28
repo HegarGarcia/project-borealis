@@ -1,20 +1,18 @@
-import { auth, firestore } from "firebase/app";
+import { firestore } from "firebase/app";
 import "firebase/firestore";
-import { user } from "rxfire/auth";
-import { collectionData } from "rxfire/firestore";
-import { map, startWith, switchMap } from "rxjs/operators";
+import { collectionData, docData } from "rxfire/firestore";
+import { startWith } from "rxjs/operators";
+import type Project from "../typings/Project";
 import app from "./firebase";
 
 const db = firestore(app);
 const root = db.collection("projects");
 
-const projectCollection = user(auth()).pipe(
-  map(({ uid }) => root.where("uid", "==", uid))
-);
+export function getProjectsFor(uid: string) {
+  const query = root.where("uid", "==", uid);
+  return collectionData<Project>(query, "id").pipe(startWith<Project[]>([]));
+}
 
-export const projects = projectCollection.pipe(
-  startWith(root),
-  switchMap((collection) =>
-    collectionData(collection, "id").pipe(startWith([]))
-  )
-);
+export function getProject(id: string) {
+  return docData<Project>(root.doc(id), "id");
+}

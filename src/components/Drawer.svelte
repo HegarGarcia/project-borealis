@@ -1,8 +1,12 @@
 <script lang="ts">
+  import { getProjectsFor } from "../services/projects";
+  import { recipes } from "../services/recipes";
+  import type User from "../typings/User";
   import LinkList from "./LinkList.svelte";
   import Profile from "./Profile.svelte";
-  import { projects } from "../services/projects";
-  import { recipes } from "../services/recipes";
+
+  export let user: User;
+  let projects = getProjectsFor(user.uid);
 </script>
 
 <style lang="scss">

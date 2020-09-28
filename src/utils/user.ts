@@ -1,11 +1,5 @@
 import type { User as FirebaseUser } from "firebase/app";
-
-interface User {
-  uid: string;
-  name: string;
-  email: string;
-  photoUrl: string;
-}
+import type User from "../typings/User";
 
 export function toUser(user: Partial<FirebaseUser>): User {
   return {

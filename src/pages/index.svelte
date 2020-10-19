@@ -1,27 +1,34 @@
 <script lang="ts">
+  import { always, cond, equals, or } from "ramda";
   import ForgotPassword from "./_forgotPassword.svelte";
   import SignIn from "./_signin.svelte";
   import SignUp from "./_signup.svelte";
 
-  type Page = "login" | "signup" | "forgot";
-  let page: Page = "login";
-  let title: string;
-  let form: any;
-
-  $: switch (page) {
-    case "login":
-      title = "Log In";
-      form = SignIn;
-      break;
-    case "forgot":
-      title = "Forgot Password";
-      form = ForgotPassword;
-      break;
-    case "signup":
-      title = "Register";
-      form = SignUp;
-      break;
+  interface Page {
+    title: string;
+    component: unknown;
   }
+
+  enum PageTypes {
+    login,
+    signup,
+    forgot,
+  }
+
+  let pageName = PageTypes.login;
+
+  const isLogin = equals(PageTypes.login);
+  const isForgot = equals(PageTypes.forgot);
+  const isRegister = equals(PageTypes.signup);
+
+  const getPage = cond<PageTypes, Page>([
+    [isLogin, always({ title: "Log In", component: SignIn })],
+    [isForgot, always({ title: "Forgot Password", component: ForgotPassword })],
+    [isRegister, always({ title: "Register", component: SignUp })],
+  ]);
+
+  let page: Page;
+  $: page = getPage(pageName);
 </script>
 
 <style lang="scss">
@@ -56,20 +63,18 @@
 
 <section>
   <header>
-    <h1>{title}</h1>
+    <h1>{page.title}</h1>
   </header>
 
-  <svelte:component this={form} />
+  <svelte:component this={page.component} />
 
   <div>
-    {#if page === 'login'}
-      <button on:click={() => (page = 'forgot')}>Forgot Password?</button>
+    {#if isLogin(pageName)}
+      <button on:click={() => (pageName = PageTypes.forgot)}>Forgot Password?</button>
       <hr />
-      <button on:click={() => (page = 'signup')}>Register</button>
-    {:else if page === 'signup'}
-      <button on:click={() => (page = 'login')}>Log In</button>
-    {:else if page === 'forgot'}
-      <button on:click={() => (page = 'login')}>Log In</button>
+      <button on:click={() => (pageName = PageTypes.signup)}>Register</button>
+    {:else if or(isRegister(pageName), isForgot(pageName))}
+      <button on:click={() => (pageName = PageTypes.login)}>Log In</button>
     {/if}
   </div>
 </section>
